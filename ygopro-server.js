@@ -248,7 +248,7 @@
 
   disconnect_list = {}; // {old_client, old_server, room_id, timeout, deckbuf}
 
-  extra_mode_list = global.extra_mode_list = []; // (rule) => void, with 'this' is ROOM 
+  extra_mode_list = global.extra_mode_list = []; // (rule) => void, with 'this' is ROOM
 
   moment_now = global.moment_now = null;
 
@@ -2483,7 +2483,7 @@
     client.server = server;
     server.client = client;
     client.setTimeout(2000); //连接前超时2秒
-    
+
     // 释放处理
     closeHandler = function(error) {
       var room;
@@ -2801,6 +2801,7 @@
       replay = (await dataManager.getRandomCloudReplay());
       await client.open_cloud_replay(replay);
     } else if (info.version !== settings.version && !settings.alternative_versions.includes(info.version)) {
+      console.log("ClientVersion:" + info.version);
       ygopro.stoc_send_chat(client, (info.version < settings.version ? settings.modules.update : settings.modules.wait_update), ygopro.constants.COLORS.RED);
       ygopro.stoc_send(client, 'ERROR_MSG', {
         msg: 4,
