@@ -5,7 +5,7 @@
 
     this.vpost = async function (path, params) {
         try {
-            return axios.request({
+            return await axios.request({
                 method: 'post',
                 url: URL + path,
                 data: params,
