@@ -3,7 +3,6 @@
     const axios = require('axios');
     const URL = 'https://io2.vitechliu.com/api/srvpro'
 
-    this.ttt1 = function() { return "123"; }
     this.vpost = async function (path, params) {
         await axios.request({
             method: 'post',
