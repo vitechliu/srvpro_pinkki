@@ -1786,7 +1786,7 @@
       }
       try {
         this.process = spawn('./ygopro', param, {
-          cwd: 'ygopro'
+          cwd: '/www/wwwroot/ygopro'
         });
         this.process_pid = this.process.pid;
         this.process.on('error', (err) => {
