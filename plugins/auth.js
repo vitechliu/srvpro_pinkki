@@ -10,7 +10,10 @@ ygopro.stoc_follow_before('JOIN_GAME', false, async (buffer, info, client, serve
     const res = await utils.vpost('/auth', {name: client.name_vpass, room: room.name})
     if (res && res.data.message) {
         console.log(res.data)
-        ygopro.stoc_send_chat_to_room(room, res.data.message, ygopro.constants.COLORS.PINK);
+        const status = res.data.status ?? 0
+        if (status > 0) {
+            ygopro.stoc_send_chat_to_room(room, res.data.message, ygopro.constants.COLORS.PINK);
+        }
     }
     // ygopro.stoc_send_chat_to_room(room, "cc1", ygopro.constants.COLORS.RED);
 });
