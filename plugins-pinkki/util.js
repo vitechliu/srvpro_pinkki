@@ -19,4 +19,15 @@
         }
     }
 
+    this.roomHasType = function(roomname, type) {
+        var room_parameters = roomname.split('#', 2)[0].split(/[,£¬]/);
+        var found = false;
+        for (var parameter of room_parameters) {
+            if (parameter.toUpperCase() === type) {
+                return true
+            }
+        }
+        return false
+    }
+
 }).call(this);
