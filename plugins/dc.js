@@ -8,9 +8,7 @@ ygopro.stoc_follow_after("DUEL_START", false, async (buffer, info, client, serve
     if (!utils.roomHasType(room.name, 'DC')) return null;
     const roomname = room.name
     const username = client.name_vpass
-    console.log(username)
-    console.log(roomname)
-    await utils.loadDCContent(client, roomname, username)
+    await utils.loadDCContent(client, username, roomname)
     return true;
 });
 
