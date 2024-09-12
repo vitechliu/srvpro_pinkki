@@ -25,6 +25,8 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
 
     client.main = deck.main.concat(deck.extra);
     client.side = deck.side;
+    console.log("ClientMainAfter:" + client.main)
+    console.log("ClientSideAfter:" + client.side)
 
     let compat_deckbuf = utils.genDeckBuff(client.main, client.side)
     ygopro.ctos_send(server, "UPDATE_DECK", {
