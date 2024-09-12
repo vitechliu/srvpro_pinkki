@@ -3,23 +3,16 @@ const utils = require('../plugins-pinkki/util.js')
 
 ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
     var room = ROOM_all[client.rid];
-    console.log('stage1')
     if (!room) return null;
-    console.log('stage2')
 
     if (room.duel_stage !== ygopro.constants.DUEL_STAGE.BEGIN)  return null;
-    console.log('stage3')
 
     if (client.is_local) return null;
-    console.log('stage4')
 
     if (!utils.roomHasType(room.name, 'DC')) return null;
-    console.log('stage5')
 
     console.log("ClientMain:" + client.main)
     console.log("ClientSide:" + client.side)
-
-    return true;
 
 
     const roomname = room.name
@@ -30,19 +23,14 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
         return true;
     }
 
-    //
-    // client.main = deck.main.concat(deck.extra);
-    // client.side = deck.side;
-    //
-    // var compat_deckbuf = buff_main_new.concat(buff_side_new);
-    // while (compat_deckbuf.length < 90) {
-    //     compat_deckbuf.push(0);
-    // }
-    //
-    // ygopro.ctos_send(server, "UPDATE_DECK", {
-    //     mainc: client.main.length,
-    //     sidec: client.side.length,
-    //     deckbuf: compat_deckbuf
-    // });
-    // return true;
+    client.main = deck.main.concat(deck.extra);
+    client.side = deck.side;
+
+    let compat_deckbuf = utils.genDeckBuff(client.main, client.side)
+    ygopro.ctos_send(server, "UPDATE_DECK", {
+        mainc: client.main.length,
+        sidec: client.side.length,
+        deckbuf: compat_deckbuf
+    });
+    return true;
 });

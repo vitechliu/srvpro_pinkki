@@ -16,6 +16,13 @@
             return null
         }
     }
+    this.genDeckBuff = function(main, side) {
+        let compat_deckbuf = main.concat(side);
+        // while (compat_deckbuf.length < 90) {
+        //     compat_deckbuf.push(0);
+        // }
+        return compat_deckbuf
+    }
     this.vpost = async function (path, params) {
         try {
             return await axios.request({
