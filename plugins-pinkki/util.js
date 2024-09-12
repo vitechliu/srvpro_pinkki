@@ -30,6 +30,8 @@
         this.globalInitDict()
         const key = namevpass + '_' + roomname
         const res = global.temp_hint_dict[key] ?? null
+        console.log('loadDC')
+        console.log(res)
         if (res) {
             const firstLine = "您分配到的随机卡组为:" + res.name + "  (ID" + res.id + ")(作者:" + res.author +")"
             client.stoc_send_chat(client, firstLine , ygopro.constants.COLORS.PINK);

@@ -3,13 +3,13 @@ const utils = require('../plugins-pinkki/util.js')
 
 
 ygopro.stoc_follow_after("DUEL_START", false, async (buffer, info, client, server, datas) => {
-    console.log('DS1')
     var room = ROOM_all[client.rid];
     if (!room) return null;
     if (!utils.roomHasType(room.name, 'DC')) return null;
-    console.log('DS5')
     const roomname = room.name
     const username = client.name_vpass
+    console.log(username)
+    console.log(roomname)
     await utils.loadDCContent(client, roomname, username)
     return true;
 });
