@@ -11,6 +11,7 @@
         const uid = this.uidGet(username)
         try {
             const data = this.vpost('/load', {room: roomname, uid: uid})
+            console.log(data)
             return data.data ?? null
         } catch (e) {
             return null
