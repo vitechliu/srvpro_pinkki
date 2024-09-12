@@ -36,12 +36,12 @@
         // console.log(res)
         if (res) {
             const firstLine = "您分配到的随机卡组为:" + res.name + "  (ID" + res.id + ")(作者:" + res.author +")"
-            client.stoc_send_chat(client, firstLine , ygopro.constants.COLORS.PINK);
+            ygopro.stoc_send_chat(client, firstLine , ygopro.constants.COLORS.PINK);
 
             if (res.hint && res.hint.length > 0) {
                 await this.sleep(5000)
                 const nextLine = "来自作者的展开提示: " + res.hint
-                client.stoc_send_chat(client, nextLine , ygopro.constants.COLORS.PINK);
+                ygopro.stoc_send_chat(client, nextLine , ygopro.constants.COLORS.PINK);
             }
             unset(global.temp_hint_dict[key])
         }
