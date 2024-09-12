@@ -5,6 +5,11 @@
 
     this.globalInitDict = function() {
         if (!global.pinkki_uid_dict) global.pinkki_uid_dict = {}
+        if (!global.temp_hint_dict) global.temp_hint_dict = {}
+    }
+
+    this.sleep = async function(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
     }
 
     this.getDCDeck = async function(roomname, username) {
@@ -14,6 +19,27 @@
             return data.data ?? null
         } catch (e) {
             return null
+        }
+    }
+    this.recordDCContent = function (namevpass, roomname, deckdata) {
+        this.globalInitDict()
+        const key = namevpass + '_' + roomname
+        global.temp_hint_dict[key] = deckdata
+    }
+    this.loadDCContent = async function (client, namevpass, roomname) {
+        this.globalInitDict()
+        const key = namevpass + '_' + roomname
+        const res = global.temp_hint_dict[key] ?? null
+        if (res) {
+            const firstLine = "您分配到的随机卡组为:" + res.name + "  (ID" + res.id + ")(作者:" + res.author +")"
+            client.stoc_send_chat(client, firstLine , ygopro.constants.COLORS.PINK);
+
+            if (res.hint && res.hint.length > 0) {
+                await this.sleep(5000)
+                const nextLine = "来自作者的展开提示: " + res.hint
+                client.stoc_send_chat(client, nextLine , ygopro.constants.COLORS.PINK);
+            }
+            unset(global.temp_hint_dict[key])
         }
     }
     this.genDeckBuff = function(main, side) {

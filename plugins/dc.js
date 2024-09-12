@@ -1,6 +1,19 @@
 //同步测试
 const utils = require('../plugins-pinkki/util.js')
 
+
+ygopro.stoc_follow_after("DUEL_START", false, async (buffer, info, client, server, datas) => {
+    var room = ROOM_all[client.rid];
+    if (!room) return null;
+    if (client.is_local) return null;
+    if (!utils.roomHasType(room.name, 'DC')) return null;
+
+    const roomname = room.name
+    const username = client.name_vpass
+    await utils.loadDCContent(client, roomname, username)
+    return true;
+});
+
 ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
     var room = ROOM_all[client.rid];
     if (!room) return null;
@@ -11,22 +24,21 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
 
     if (!utils.roomHasType(room.name, 'DC')) return null;
 
-    console.log("ClientMain:" + client.main)
-    console.log("ClientSide:" + client.side)
-
 
     const roomname = room.name
     const username = client.name_vpass
-    const deck = await utils.getDCDeck(roomname, username);
-    if (deck === null) {
-        ygopro.stoc_send_chat_to_room(room, "获取随机卡组失败，使用自带卡组", ygopro.constants.COLORS.PINK);
+    const deckRaw = await utils.getDCDeck(roomname, username);
+    if (deckRaw === null) {
+        ygopro.stoc_send_chat(room, "获取随机卡组失败，使用自带卡组", ygopro.constants.COLORS.PINK);
         return true;
     }
 
+    const deck = deckRaw.deck
+    utils.recordDCContent(username, roomname, deckRaw)
     client.main = deck.main.concat(deck.extra);
     client.side = deck.side;
     console.log("ClientMainAfter:" + client.main)
-    console.log("ClientSideAfter:" + client.side)
+    ygopro.stoc_send_chat(client, "成功获取随机卡组", ygopro.constants.COLORS.PINK);
 
     let compat_deckbuf = utils.genDeckBuff(client.main, client.side)
     ygopro.ctos_send(server, "UPDATE_DECK", {
