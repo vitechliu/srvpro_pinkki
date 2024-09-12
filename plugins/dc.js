@@ -3,11 +3,11 @@ const utils = require('../plugins-pinkki/util.js')
 
 
 ygopro.stoc_follow_after("DUEL_START", false, async (buffer, info, client, server, datas) => {
+    console.log('DS1')
     var room = ROOM_all[client.rid];
     if (!room) return null;
-    if (client.is_local) return null;
     if (!utils.roomHasType(room.name, 'DC')) return null;
-
+    console.log('DS5')
     const roomname = room.name
     const username = client.name_vpass
     await utils.loadDCContent(client, roomname, username)
@@ -37,7 +37,7 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
     utils.recordDCContent(username, roomname, deckRaw)
     client.main = deck.main.concat(deck.extra);
     client.side = deck.side;
-    console.log("ClientMainAfter:" + client.main)
+    // console.log("ClientMainAfter:" + client.main)
     ygopro.stoc_send_chat(client, "成功获取随机卡组", ygopro.constants.COLORS.PINK);
 
     let compat_deckbuf = utils.genDeckBuff(client.main, client.side)
