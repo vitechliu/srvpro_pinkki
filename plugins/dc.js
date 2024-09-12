@@ -17,7 +17,7 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
 
     const roomname = room.name
     const username = client.name_vpass
-    const deck = await utils.getDeck(roomname, username);
+    const deck = await utils.getDCDeck(roomname, username);
     if (deck === null) {
         ygopro.stoc_send_chat_to_room(room, "获取随机卡组失败，使用自带卡组", ygopro.constants.COLORS.PINK);
         return true;
