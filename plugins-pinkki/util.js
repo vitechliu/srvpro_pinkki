@@ -43,7 +43,7 @@
                 const nextLine = "来自作者的展开提示: " + res.hint
                 ygopro.stoc_send_chat(client, nextLine , ygopro.constants.COLORS.PINK);
             }
-            unset(global.temp_hint_dict[key])
+            delete global.temp_hint_dict[key]
         }
     }
     this.genDeckBuff = function(main, side) {
