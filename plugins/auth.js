@@ -12,6 +12,8 @@ ygopro.stoc_follow_before('JOIN_GAME', false, async (buffer, info, client, serve
         console.log(res.data)
         const status = res.data.status ?? 0
         if (status > 0) {
+            const uid = res.data.uid
+            utils.uidSet(uid, client.name_vpass)
             ygopro.stoc_send_chat_to_room(room, res.data.message, ygopro.constants.COLORS.PINK);
         }
     }

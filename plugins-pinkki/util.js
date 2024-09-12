@@ -3,6 +3,19 @@
     const axios = require('axios');
     const URL = 'https://io2.vitechliu.com/api/srvpro'
 
+    this.globalInitDict = function() {
+        if (!global.pinkki_uid_dict) global.pinkki_uid_dict = {}
+    }
+
+    this.getDCDeck = async function(roomname, username) {
+        const uid = this.uidGet(username)
+        try {
+            const data = this.vpost('/load', {room: roomname, uid: uid})
+            return data.data ?? null
+        } catch (e) {
+            return null
+        }
+    }
     this.vpost = async function (path, params) {
         try {
             return await axios.request({
@@ -17,6 +30,15 @@
             console.error(e.message)
             return null
         }
+    }
+
+    this.uidSet = function(name, uid) {
+        this.globalInitDict()
+        global.pinkki_uid_dict[name] = uid
+    }
+    this.uidGet = function(name) {
+        this.globalInitDict()
+        return global.pinkki_uid_dict[name] ?? null
     }
 
     this.roomHasType = function(roomname, type) {
