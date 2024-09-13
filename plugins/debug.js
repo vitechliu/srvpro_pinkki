@@ -23,7 +23,7 @@ if (DEBUG) {
         });
     }
     for (let e2 of STOC_EVENTS) {
-        ygopro.ctos_follow_after(e2, false, (buffer, info, client, server, datas) => {
+        ygopro.stoc_follow_after(e2, false, (buffer, info, client, server, datas) => {
             let infos = ['[STOC]'];
             if (client && client.rid) {
                 var room = ROOM_all[client.rid] ?? null;
