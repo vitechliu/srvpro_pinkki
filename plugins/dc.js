@@ -39,7 +39,7 @@ async function generateDeck(client, server, room, failMessage) {
     // const promise = ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
     // console.log(promise)
 
-    await ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
+    ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
 
 }
 
@@ -57,7 +57,7 @@ ygopro.stoc_follow_after('JOIN_GAME', false, async (buffer, info, client, server
 
 
 ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
-    return null;
+    return true;
 
     // console.log('CurrentClientMain')
     // console.log(client.main)
