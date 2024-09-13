@@ -34,8 +34,8 @@ async function generateDeck(client, server, room, failMessage) {
         deckbuf: compat_deckbuf
     }
     // utils.optimizeClientDeck(updateInfo, client)
-    console.log("UpdateInfo:");
-    console.log(updateInfo)
+    // console.log("UpdateInfo:");
+    // console.log(updateInfo)
     // const promise = ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
     // console.log(promise)
 
@@ -48,10 +48,10 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
     let db = info.deckbuf
     let db0 = db['0']
 
-    console.log('CurrentClientMain')
-    console.log(client.main)
-    console.log('info.deckbuf')
-    console.log(info.deckbuf)
+    // console.log('CurrentClientMain')
+    // console.log(client.main)
+    // console.log('info.deckbuf')
+    // console.log(info.deckbuf)
     // ygopro.ctos_send(server, "UPDATE_DECK", info);
     // return null;
 
