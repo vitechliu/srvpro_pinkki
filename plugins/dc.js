@@ -22,16 +22,16 @@ async function generateDeck(client, server, room, failMessage) {
     }
     const deck = deckRaw.deck
     utils.recordDCContent(username, roomname, deckRaw)
-    client.main = deck.main.concat(deck.extra);
-    client.side = deck.side;
+    const main = deck.main.concat(deck.extra);
+    const side = deck.side;
     ygopro.stoc_send_chat(client, "成功获取随机卡组", ygopro.constants.COLORS.PINK);
-
-    let compat_deckbuf = utils.genDeckBuff(client.main, client.side)
+    let compat_deckbuf = utils.genDeckBuff(main, side)
     const updateInfo = {
-        mainc: client.main.length,
-        sidec: client.side.length,
+        mainc: main.length,
+        sidec: side.length,
         deckbuf: compat_deckbuf
     }
+    utils.optimizeClientDeck(client, info)
     // console.log("UpdateInfo:");
     // console.log(updateInfo)
     ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);

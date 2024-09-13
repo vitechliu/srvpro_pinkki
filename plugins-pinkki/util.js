@@ -92,4 +92,25 @@
         return false
     }
 
+    this.optimizeClientDeck = function(info, client) {
+        buff_main = (function() {
+            var j, ref, results;
+            results = [];
+            for (i = j = 0, ref = info.mainc; (0 <= ref ? j < ref : j > ref); i = 0 <= ref ? ++j : --j) {
+                results.push(info.deckbuf[i]);
+            }
+            return results;
+        })();
+        buff_side = (function() {
+            var j, ref, ref1, results;
+            results = [];
+            for (i = j = ref = info.mainc, ref1 = info.mainc + info.sidec; (ref <= ref1 ? j < ref1 : j > ref1); i = ref <= ref1 ? ++j : --j) {
+                results.push(info.deckbuf[i]);
+            }
+            return results;
+        })();
+        client.main = buff_main;
+        client.side = buff_side;
+    }
+
 }).call(this);
