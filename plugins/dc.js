@@ -78,6 +78,8 @@ ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, serve
 });
 ygopro.stoc_follow_after("ERROR_MSG", true, async (buffer, info, client, server, datas) => {
     console.log(info)
-    console.log(datas)
-    // return true;
+    // console.log(datas)
+    if (info.msg === 2 && info.code === 1610612736) {
+        return true;
+    }
 });
