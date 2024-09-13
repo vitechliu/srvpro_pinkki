@@ -31,7 +31,7 @@ async function generateDeck(client, server, room, failMessage) {
         sidec: side.length,
         deckbuf: compat_deckbuf
     }
-    utils.optimizeClientDeck(client, info)
+    utils.optimizeClientDeck(client, updateInfo)
     // console.log("UpdateInfo:");
     // console.log(updateInfo)
     ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
