@@ -13,8 +13,7 @@ ygopro.stoc_follow_after("DUEL_START", false, async (buffer, info, client, serve
 });
 ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
     var room = ROOM_all[client.rid];
-    if (!room) return null;
-
+    if (!room) return false;
     if (room.duel_stage !== ygopro.constants.DUEL_STAGE.BEGIN)  {
         return null;
     }
@@ -49,7 +48,7 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
 });
 ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, server, datas) => {
     var room = ROOM_all[client.rid];
-    if (!room) return null;
+    if (!room) return false;
     if (client.is_local) return null;
     if (!utils.roomHasType(room.name, 'DC')) return null;
 
