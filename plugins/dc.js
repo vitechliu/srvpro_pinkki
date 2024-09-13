@@ -39,7 +39,7 @@ async function generateDeck(client, server, room, failMessage) {
     // const promise = ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
     // console.log(promise)
 
-    ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
+    await ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
 
 }
 
