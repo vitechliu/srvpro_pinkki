@@ -12,6 +12,7 @@ ygopro.stoc_follow_after("DUEL_START", false, async (buffer, info, client, serve
     return true;
 });
 ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
+    console.log(info);
     var room = ROOM_all[client.rid];
     if (!room) return false;
     if (room.duel_stage !== ygopro.constants.DUEL_STAGE.BEGIN)  {
