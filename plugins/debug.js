@@ -8,7 +8,7 @@ const DEBUG = true;
 if (DEBUG) {
 
     for (let e of CTOS_EVENTS) {
-        ygopro.ctos_follow_after(e, false, async (buffer, info, client, server, datas) => {
+        ygopro.ctos_follow_after(e, false, (buffer, info, client, server, datas) => {
             let infos = ['[CTOS]'];
             if (client.rid) {
                 var room = ROOM_all[client.rid] ?? null;
@@ -23,7 +23,7 @@ if (DEBUG) {
         });
     }
     for (let e of STOC_EVENTS) {
-        ygopro.ctos_follow_after(e, false, async (buffer, info, client, server, datas) => {
+        ygopro.ctos_follow_after(e, false, (buffer, info, client, server, datas) => {
             let infos = ['[STOC]'];
             if (client.rid) {
                 var room = ROOM_all[client.rid] ?? null;
