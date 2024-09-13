@@ -48,7 +48,7 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
     console.log(client.start_deckbuf)
     console.log('datas')
     console.log(datas)
-    onsole.log('info.deckbuf')
+    console.log('info.deckbuf')
     console.log(info.deckbuf)
     ygopro.ctos_send(server, "UPDATE_DECK", info);
     return null;
