@@ -48,10 +48,13 @@
     }
     this.genDeckBuff = function(main, side) {
         let compat_deckbuf = main.concat(side);
-        // while (compat_deckbuf.length < 90) {
-        //     compat_deckbuf.push(0);
-        // }
-        return compat_deckbuf
+        let fin = {}
+        let i = 0
+        for (let c of compat_deckbuf) {
+            fin[i.toString()] = c
+            i ++
+        }
+        return fin
     }
     this.vpost = async function (path, params) {
         try {
