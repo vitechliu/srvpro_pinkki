@@ -36,9 +36,11 @@ async function generateDeck(client, server, room, failMessage) {
     // utils.optimizeClientDeck(updateInfo, client)
     console.log("UpdateInfo:");
     console.log(updateInfo)
-    const promise = ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
-    console.log(promise)
-    
+    // const promise = ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
+    // console.log(promise)
+
+    ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
+
 }
 
 ygopro.ctos_follow_before("UPDATE_DECK", false, async (buffer, info, client, server, datas) => {
