@@ -57,14 +57,6 @@ ygopro.stoc_follow_after('JOIN_GAME', false, async (buffer, info, client, server
 
 
 ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
-    return true;
-
-    // console.log('CurrentClientMain')
-    // console.log(client.main)
-    // console.log('info.deckbuf')
-    // console.log(info.deckbuf)
-    // ygopro.ctos_send(server, "UPDATE_DECK", info);
-    // return null;
 
 
     var room = ROOM_all[client.rid];
@@ -74,9 +66,9 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
     }
     if (client.is_local) return null;
     if (!utils.roomHasType(room.name, 'DC')) return null;
-
-    await generateDeck(client, server, room, "获取随机卡组失败，使用自带卡组");
     return true;
+    // await generateDeck(client, server, room, "获取随机卡组失败，使用自带卡组");
+    // return true;
 });
 ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, server, datas) => {
     var room = ROOM_all[client.rid];
@@ -87,10 +79,10 @@ ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, serve
     await generateDeck(client, server, room, "更新随机卡组失败，使用自带卡组");
     return true;
 });
-ygopro.stoc_follow_after("ERROR_MSG", true, async (buffer, info, client, server, datas) => {
-    console.log(info)
-    // console.log(datas)
-    if (info.msg === 2 && info.code === 1610612736) {
-        return true;
-    }
-});
+// ygopro.stoc_follow_after("ERROR_MSG", true, async (buffer, info, client, server, datas) => {
+//     console.log(info)
+//     // console.log(datas)
+//     if (info.msg === 2 && info.code === 1610612736) {
+//         return true;
+//     }
+// });
