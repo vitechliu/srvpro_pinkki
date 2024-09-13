@@ -43,7 +43,7 @@ async function generateDeck(client, server, room, failMessage) {
 
 }
 
-ygopro.ctos_follow_after("UPDATE_DECK", false, async (buffer, info, client, server, datas) => {
+ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
     console.log('RealInfo:');
     let db = info.deckbuf
     let db0 = db['0']
@@ -75,4 +75,9 @@ ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, serve
 
     await generateDeck(client, server, room, "更新随机卡组失败，使用自带卡组");
     return true;
+});
+ygopro.stoc_follow_after("ERROR_MSG", true, async (buffer, info, client, server, datas) => {
+    console.log(info)
+    console.log(datas)
+    // return true;
 });
