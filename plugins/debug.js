@@ -2,7 +2,7 @@
 const utils = require('../plugins-pinkki/util.js')
 
 const CTOS_EVENTS = ['UPDATE_DECK', 'PLAYER_INFO', 'JOIN_GAME'];
-const STOC_EVENTS = ['GAME_MSG', 'CHANGE_SIDE'];
+const STOC_EVENTS = ['CHANGE_SIDE'];
 const DEBUG = true;
 
 if (DEBUG) {
