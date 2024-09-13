@@ -26,7 +26,7 @@ if (DEBUG) {
     for (let e2 of STOC_EVENTS) {
         ygopro.stoc_follow(e2, false, (buffer, info, client, server, datas) => {
             let infos = ['[STOC]'];
-            infos.push('[' + e + ']')
+            infos.push('[' + e2 + ']')
             if (client && client.rid) {
                 var room = ROOM_all[client.rid] ?? null;
                 if (room) {
