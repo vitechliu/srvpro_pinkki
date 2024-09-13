@@ -46,18 +46,22 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
     console.log('deckbuf0Type' + typeof(db0));
     console.log(db0);
 
-    var room = ROOM_all[client.rid];
-    if (!room) return false;
-    if (room.duel_stage !== ygopro.constants.DUEL_STAGE.BEGIN)  {
-        return null;
-    }
 
-    if (client.is_local) return null;
-
-    if (!utils.roomHasType(room.name, 'DC')) return null;
-
-    await generateDeck(client, server, room, "获取随机卡组失败，使用自带卡组");
+    ygopro.ctos_send(server, "UPDATE_DECK", info);
     return true;
+    //
+    // var room = ROOM_all[client.rid];
+    // if (!room) return false;
+    // if (room.duel_stage !== ygopro.constants.DUEL_STAGE.BEGIN)  {
+    //     return null;
+    // }
+    //
+    // if (client.is_local) return null;
+    //
+    // if (!utils.roomHasType(room.name, 'DC')) return null;
+    //
+    // await generateDeck(client, server, room, "获取随机卡组失败，使用自带卡组");
+    // return true;
 });
 ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, server, datas) => {
     var room = ROOM_all[client.rid];
