@@ -4347,7 +4347,7 @@
   });
 
   ygopro.ctos_follow('UPDATE_DECK', true, async function(buffer, info, client, server, datas) {
-    console.log("RealUpdateDeck")
+    // console.log("RealUpdateDeck")
     var athleticCheckResult, buff_main, buff_side, card, current_deck, deck, deck_array, deck_main, deck_side, deck_text, deckbuf, decks, found_deck, i, j, l, len, len1, line, oppo_pos, recover_player_data, recoveredDeck, room, struct, win_pos;
     if (settings.modules.reconnect.enabled && client.pre_reconnecting) {
       if (!CLIENT_is_able_to_reconnect(client) && !CLIENT_is_able_to_kick_reconnect(client)) {

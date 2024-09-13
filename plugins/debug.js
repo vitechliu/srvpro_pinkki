@@ -1,8 +1,8 @@
 //log
 const utils = require('../plugins-pinkki/util.js')
 
-const CTOS_EVENTS = ['UPDATE_DECK', 'PLAYER_INFO', 'JOIN_GAME'];
-const STOC_EVENTS = ['CHANGE_SIDE', 'DUEL_START', 'ERROR_MSG', 'GAME_MSG', 'DECK_COUNT'];
+const CTOS_EVENTS = ['UPDATE_DECK', 'PLAYER_INFO', 'JOIN_GAME', 'HS_READY', 'HS_NOTREADY'];
+const STOC_EVENTS = ['CHANGE_SIDE', 'DUEL_START', 'ERROR_MSG'];
 const DEBUG = true;
 
 if (DEBUG) {

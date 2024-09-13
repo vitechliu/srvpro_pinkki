@@ -44,9 +44,7 @@ async function generateDeck(client, server, room, failMessage) {
 }
 
 ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
-    console.log('RealInfo:');
-    let db = info.deckbuf
-    let db0 = db['0']
+
 
     // console.log('CurrentClientMain')
     // console.log(client.main)
