@@ -32,14 +32,20 @@ async function generateDeck(client, server, room, failMessage) {
         sidec: client.side.length,
         deckbuf: compat_deckbuf
     }
-    console.log("UpdateInfo:");
-    console.log(updateInfo)
+    // console.log("UpdateInfo:");
+    // console.log(updateInfo)
     ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
 }
 
 ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
     console.log('RealInfo:');
-    console.log(info);
+    console.log('RealInfoType:' + typeof(info))
+    let db = info.deckbuf
+    console.log('deckbufType' + typeof(db));
+    let db0 = db['0']
+    console.log('deckbuf0Type' + typeof(db0));
+    console.log(db0);
+
     var room = ROOM_all[client.rid];
     if (!room) return false;
     if (room.duel_stage !== ygopro.constants.DUEL_STAGE.BEGIN)  {
