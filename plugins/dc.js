@@ -11,7 +11,9 @@ ygopro.stoc_follow_after("DUEL_START", false, async (buffer, info, client, serve
     await utils.loadDCContent(client, username, roomname)
     return true;
 });
-
+ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
+    console.log(123);
+});
 ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
     var room = ROOM_all[client.rid];
     if (!room) return null;
