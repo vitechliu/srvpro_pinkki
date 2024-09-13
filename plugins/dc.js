@@ -28,16 +28,14 @@ async function generateDeck(client, server, room, failMessage) {
     let compat_deckbuf = utils.genDeckBuff(main, side)
     client.main = main
     client.side = side
-    // const updateInfo = {
-    //     mainc: main.length,
-    //     sidec: side.length,
-    //     deckbuf: compat_deckbuf
-    // }
+    const updateInfo = {
+        mainc: main.length,
+        sidec: side.length,
+        deckbuf: compat_deckbuf
+    }
     // utils.optimizeClientDeck(updateInfo, client)
-
-
-    // console.log("UpdateInfo:");
-    // console.log(updateInfo)
+    console.log("UpdateInfo:");
+    console.log(updateInfo)
     // ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
 }
 
@@ -65,14 +63,7 @@ ygopro.ctos_follow_before("UPDATE_DECK", false, async (buffer, info, client, ser
     if (!utils.roomHasType(room.name, 'DC')) return null;
 
     await generateDeck(client, server, room, "获取随机卡组失败，使用自带卡组");
-    var struct = ygopro.structs.get("deck");
-    struct._setBuff(buffer);
-    struct.set("mainc", client.main.length);
-    struct.set("sidec", client.side.length);
-    var compat_deckbuf =  client.main.concat(client.side);
-    struct.set("deckbuf", compat_deckbuf);
-    buffer = struct.buffer;
-    // return true;
+    return true;
 });
 ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, server, datas) => {
     var room = ROOM_all[client.rid];
