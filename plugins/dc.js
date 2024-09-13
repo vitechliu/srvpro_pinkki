@@ -47,7 +47,7 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
     });
     return true;
 });
-ygopro.ctos_follow_after("CHANGE_SIDE", true, async (buffer, info, client, server, datas) => {
+ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, server, datas) => {
     var room = ROOM_all[client.rid];
     if (!room) return null;
     if (client.is_local) return null;
