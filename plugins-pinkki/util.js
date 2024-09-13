@@ -15,7 +15,7 @@
     this.getDCDeck = async function(roomname, username) {
         const uid = this.uidGet(username)
         try {
-            const data = await this.vpost('/load', {room: roomname, uid: uid})
+            const data = await this.vpost('/load', {room: roomname, uid: uid, name:username})
             return data.data ?? null
         } catch (e) {
             return null
