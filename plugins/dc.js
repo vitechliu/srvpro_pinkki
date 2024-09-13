@@ -43,7 +43,7 @@ async function generateDeck(client, server, room, failMessage) {
 
 }
 
-ygopro.ctos_follow_before("UPDATE_DECK", false, async (buffer, info, client, server, datas) => {
+ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
     console.log('RealInfo:');
     let db = info.deckbuf
     let db0 = db['0']
@@ -61,9 +61,7 @@ ygopro.ctos_follow_before("UPDATE_DECK", false, async (buffer, info, client, ser
     if (room.duel_stage !== ygopro.constants.DUEL_STAGE.BEGIN)  {
         return null;
     }
-
     if (client.is_local) return null;
-
     if (!utils.roomHasType(room.name, 'DC')) return null;
 
     await generateDeck(client, server, room, "获取随机卡组失败，使用自带卡组");
