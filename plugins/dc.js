@@ -44,13 +44,13 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
 
     console.log('CurrentClientMain')
     console.log(client.main)
-    console.log('CurrentClientDeckbuf')
-    console.log(client.deckbuf)
     console.log('CurrentClientStartDeckbuf')
     console.log(client.start_deckbuf)
     console.log('datas')
     console.log(datas)
-    // ygopro.ctos_send(server, "UPDATE_DECK", info);
+    onsole.log('info.deckbuf')
+    console.log(info.deckbuf)
+    ygopro.ctos_send(server, "UPDATE_DECK", info);
     return null;
 
 
