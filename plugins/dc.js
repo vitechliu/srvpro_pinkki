@@ -12,7 +12,7 @@ ygopro.stoc_follow_after("DUEL_START", false, async (buffer, info, client, serve
     return true;
 });
 
-async function generateDeck(client, room, failMessage) {
+async function generateDeck(client, server, room, failMessage) {
     const roomname = room.name
     const username = client.name_vpass
     const deckRaw = await utils.getDCDeck(roomname, username);
@@ -50,7 +50,7 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
 
     if (!utils.roomHasType(room.name, 'DC')) return null;
 
-    await generateDeck(client, room, "获取随机卡组失败，使用自带卡组");
+    await generateDeck(client, server, room, "获取随机卡组失败，使用自带卡组");
     return true;
 });
 ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, server, datas) => {
@@ -59,6 +59,6 @@ ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, serve
     if (client.is_local) return null;
     if (!utils.roomHasType(room.name, 'DC')) return null;
 
-    await generateDeck(client, room, "更新随机卡组失败，使用自带卡组");
+    await generateDeck(client, server, room, "更新随机卡组失败，使用自带卡组");
     return true;
 });
