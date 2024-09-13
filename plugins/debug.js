@@ -22,21 +22,21 @@ if (DEBUG) {
             console.log(infos.join(''));
         });
     }
-    // for (let e of STOC_EVENTS) {
-    //     ygopro.ctos_follow_after(e, false, (buffer, info, client, server, datas) => {
-    //         let infos = ['[STOC]'];
-    //         if (client.rid) {
-    //             var room = ROOM_all[client.rid] ?? null;
-    //             if (room) {
-    //                 infos.push('[房间' + room.name + ']')
-    //             }
-    //         }
-    //         if (client.name_vpass) {
-    //             infos.push('[玩家' + client.name_vpass + ']')
-    //         }
-    //         console.log(infos.join(''));
-    //     });
-    // }
+    for (let e2 of STOC_EVENTS) {
+        ygopro.ctos_follow_after(e2, false, (buffer, info, client, server, datas) => {
+            let infos = ['[STOC]'];
+            if (client && client.rid) {
+                var room = ROOM_all[client.rid] ?? null;
+                if (room) {
+                    infos.push('[房间' + room.name + ']')
+                }
+            }
+            if (client && client.name_vpass) {
+                infos.push('[玩家' + client.name_vpass + ']')
+            }
+            console.log(infos.join(''));
+        });
+    }
 
 }
 
