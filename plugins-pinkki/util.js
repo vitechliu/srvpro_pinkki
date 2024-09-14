@@ -1,5 +1,7 @@
 // //同步测试
 const axios = require('axios');
+const moment = require("moment/moment");
+const MAIN_ROOM = 'TM500,DC,T#54320';
 const URL = 'https://io2.vitechliu.com/api/srvpro'
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PinkkiUtil = void 0;
@@ -7,9 +9,10 @@ class PinkkiUtil {
     static globalInitDict() {
         if (!global.pinkki_uid_dict) global.pinkki_uid_dict = {}
         if (!global.temp_hint_dict) global.temp_hint_dict = {}
+        if (!global.start_time_dict) global.start_time_dict = {}
     }
 
-    static async sleep2(ms) {
+    static async sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms))
     }
 
@@ -27,23 +30,28 @@ class PinkkiUtil {
         const key = namevpass + '_' + roomId
         global.temp_hint_dict[key] = deckdata
     }
-    static async loadDCContent(client, namevpass, roomId) {
+    static async recordStartTime(roomId) {
         this.globalInitDict()
+        global.start_time_dict[roomId] = moment().toDate()
+    }
+    static async loadDCContent(client, namevpass, roomId) {
         const key = namevpass + '_' + roomId
         const res = global.temp_hint_dict[key] ?? null
-        // console.log('loadDC')
-        // console.log(global.temp_hint_dict)
-        // console.log(key)
-        // console.log(res)
         if (res) {
             const firstLine = "您分配到的随机卡组为:" + res.name + "  (ID" + res.id + ")(作者:" + res.author +")"
             ygopro.stoc_send_chat(client, firstLine , ygopro.constants.COLORS.PINK);
 
             if (res.hint && res.hint.length > 0) {
-                await this.sleep2(5000)
+                await this.sleep(5000)
                 const nextLine = "来自作者的展开提示: " + res.hint
                 ygopro.stoc_send_chat(client, nextLine , ygopro.constants.COLORS.PINK);
             }
+        }
+    }
+    static removeDCContent(namevpass, roomId) {
+        const key = namevpass + '_' + roomId
+        const res = global.temp_hint_dict[key] ?? null
+        if (res) {
             delete global.temp_hint_dict[key]
         }
     }
@@ -90,26 +98,55 @@ class PinkkiUtil {
         }
         return false
     }
-    //
-    // optimizeClientDeck(info, client) {
-    //     buff_main = (function() {
-    //         var j, ref, results;
-    //         results = [];
-    //         for (i = j = 0, ref = info.mainc; (0 <= ref ? j < ref : j > ref); i = 0 <= ref ? ++j : --j) {
-    //             results.push(info.deckbuf[i]);
-    //         }
-    //         return results;
-    //     })();
-    //     buff_side = (function() {
-    //         var j, ref, ref1, results;
-    //         results = [];
-    //         for (i = j = ref = info.mainc, ref1 = info.mainc + info.sidec; (ref <= ref1 ? j < ref1 : j > ref1); i = ref <= ref1 ? ++j : --j) {
-    //             results.push(info.deckbuf[i]);
-    //         }
-    //         return results;
-    //     })();
-    //     client.main = buff_main;
-    //     client.side = buff_side;
-    // }
+
+    static async logDCDuel(room) {
+        if (!this.roomHasType(room.name, 'DC')) return;
+        this.log54320Room(room, '暂无').then(res => {})
+        const roomId = room.process_pid
+        let playerInfos = []
+        for (let player of room.dueling_players) {
+            const key = namevpass + '_' + roomId
+            const res = global.temp_hint_dict[key] ?? null
+            if (!res) {
+                console.log("恢复卡组数据失败")
+                continue;
+            }
+            this.removeDCContent(player.name_vpass, roomId)
+
+            let isWinner = false;
+            if (room.winner <= 1) isWinner = player.pos <= 1
+            else isWinner = player.pos >= 2
+
+            playerInfos.push({
+                uid: this.uidGet(player.name_vpass),
+                name: player.name,
+                pos: player.pos,
+                realName: player.name_vpass,
+                deckId: res.id,
+                isWinner: isWinner,
+                ip: player.ip,
+                isFirst: player.is_first,
+            })
+        }
+        const data = {
+            room: room.name,
+            roomId: room.process_pid,
+            playerInfos: playerInfos,
+        }
+        await this.vpost('/')
+
+    }
+
+    static async log54320Room(room, players = null) {
+        if (room.name === MAIN_ROOM) {
+            if (players === null) {
+                players = '暂无'
+                if (room.players.length > 0) {
+                    players = room.players.map(x => x.name).join(',')
+                }
+            }
+            await this.vpost('/logRoom', {players})
+        }
+    }
 }
 exports.PinkkiUtil = PinkkiUtil;
