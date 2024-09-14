@@ -3428,6 +3428,7 @@
       room.winner = pos;
       room.turn = 0;
       room.duel_stage = ygopro.constants.DUEL_STAGE.END;
+
       if (settings.modules.heartbeat_detection.enabled) {
         ref = room.players;
         for (j = 0, len = ref.length; j < len; j++) {
@@ -3453,6 +3454,7 @@
           room.death = 5;
         }
       }
+      PinkkiUtil.logDCDuel(room)
     }
     if (msg_name === 'MATCH_KILL' && client.pos === 0) {
       room.match_kill = true;
@@ -4836,7 +4838,7 @@
             };
           });
           dataManager.saveDuelLog(room.name, room.process_pid, room.cloud_replay_id, replay_filename, room.hostinfo.mode, room.duel_count, playerInfos); // no synchronize here because too slow
-          PinkkiUtil.logDCDuel(room)
+          // PinkkiUtil.logDCDuel(room)
         }
       }
       if (settings.modules.mysql.enabled && settings.modules.cloud_replay.enabled && settings.modules.tournament_mode.enabled) {
