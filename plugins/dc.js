@@ -2,16 +2,25 @@
 const utils = require('../plugins-pinkki/util.js')
 
 
+// ygopro.ctos_follow_after('CREATE_GAME', true, async (buffer, info, client, server, datas) => {
+//     const room = getDCRoomFromPlayerClient(client);
+//     if (!room) return null;
+//     room.hostinfo.rule = 5
+// });
+function getDCRoomFromPlayerClient(client) {
+    if (client.is_local) return false;
+    let room = ROOM_all[client.rid] ?? false;
+    if (!room) return false;
+    if (!utils.roomHasType(room.name, 'DC')) return false;
+    return room
+}
 ygopro.stoc_follow_after("DUEL_START", false, async (buffer, info, client, server, datas) => {
-    var room = ROOM_all[client.rid];
+    const room = getDCRoomFromPlayerClient(client);
     if (!room) return null;
-    if (!utils.roomHasType(room.name, 'DC')) return null;
     const roomname = room.name
     const username = client.name_vpass
     await utils.loadDCContent(client, username, roomname)
-    return true;
 });
-
 async function generateDeck(client, server, room, failMessage) {
     const roomname = room.name
     const username = client.name_vpass
@@ -44,41 +53,26 @@ async function generateDeck(client, server, room, failMessage) {
 }
 
 ygopro.stoc_follow_after('JOIN_GAME', false, async (buffer, info, client, server, datas) => {
-    var room = ROOM_all[client.rid];
-    if (!room) return false;
-    if (room.duel_stage !== ygopro.constants.DUEL_STAGE.BEGIN)  {
-        return null;
-    }
-    if (client.is_local) return null;
-    if (!utils.roomHasType(room.name, 'DC')) return null;
-
+    const room = getDCRoomFromPlayerClient(client);
+    if (!room) return null;
+    if (room.duel_stage !== ygopro.constants.DUEL_STAGE.BEGIN) return null;
     await generateDeck(client, server, room, "获取随机卡组失败，使用自带卡组");
 });
-
-
 ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, server, datas) => {
-
-
-    var room = ROOM_all[client.rid];
-    if (!room) return false;
-    if (room.duel_stage !== ygopro.constants.DUEL_STAGE.BEGIN)  {
-        return null;
-    }
-    if (client.is_local) return null;
-    if (!utils.roomHasType(room.name, 'DC')) return null;
-    return true;
-    // await generateDeck(client, server, room, "获取随机卡组失败，使用自带卡组");
-    // return true;
+    const room = getDCRoomFromPlayerClient(client);
+    if (!room) return null;
+    if (room.duel_stage !== ygopro.constants.DUEL_STAGE.BEGIN) return null;
+    return true; //跳过DC房间的自主卡组提交阶段
 });
 ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, server, datas) => {
-    var room = ROOM_all[client.rid];
-    if (!room) return false;
-    if (client.is_local) return null;
-    if (!utils.roomHasType(room.name, 'DC')) return null;
-
+    //todo test
+    const room = getDCRoomFromPlayerClient(client);
+    if (!room) return null;
     await generateDeck(client, server, room, "更新随机卡组失败，使用自带卡组");
     return true;
 });
+
+
 // ygopro.stoc_follow_after("ERROR_MSG", true, async (buffer, info, client, server, datas) => {
 //     console.log(info)
 //     // console.log(datas)

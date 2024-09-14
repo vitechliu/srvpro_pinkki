@@ -1656,7 +1656,7 @@
           this.hostinfo.rule = 0;
           this.hostinfo.lflist = 0;
         }
-        if (rule.match(/(^|，|,)(OT|TCG)(，|,|$)/)) {
+        if (rule.match(/(^|，|,)(OT|TCG|DC)(，|,|$)/)) {
           this.hostinfo.rule = 5;
         }
         if (rule.match(/(^|，|,)(SC|CN|CCG|CHINESE)(，|,|$)/)) {
