@@ -13,7 +13,7 @@ class PinkkiUtil {
         return new Promise(resolve => setTimeout(resolve, ms))
     }
 
-    async static getDCDeck(roomname, username) {
+    static async getDCDeck(roomname, username) {
         const uid = this.uidGet(username)
         try {
             const data = await this.vpost('/load', {room: roomname, uid: uid, name:username})
@@ -27,7 +27,7 @@ class PinkkiUtil {
         const key = namevpass + '_' + roomId
         global.temp_hint_dict[key] = deckdata
     }
-    async static loadDCContent(client, namevpass, roomId) {
+    static async loadDCContent(client, namevpass, roomId) {
         this.globalInitDict()
         const key = namevpass + '_' + roomId
         const res = global.temp_hint_dict[key] ?? null
@@ -57,7 +57,7 @@ class PinkkiUtil {
         }
         return fin
     }
-    async static vpost(path, params) {
+    static async vpost(path, params) {
         try {
             return await axios.request({
                 method: 'post',
