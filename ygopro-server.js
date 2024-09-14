@@ -1721,7 +1721,7 @@
         if (rule.match(/(^|，|,)(CUSTOM|DIY)(，|,|$)/)) {
           this.hostinfo.rule = 3;
         }
-        if (rule.match(/(^|，|,)(NOCHECK|NC)(，|,|$)/)) {
+        if (rule.match(/(^|，|,)(NOCHECK|NC|DC)(，|,|$)/)) {
           this.hostinfo.no_check_deck = true;
         }
         if (rule.match(/(^|，|,)(NOSHUFFLE|NS)(，|,|$)/)) {
