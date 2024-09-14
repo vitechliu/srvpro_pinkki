@@ -133,7 +133,7 @@ class PinkkiUtil {
             roomId: room.process_pid,
             playerInfos: playerInfos,
         }
-        await this.vpost('/roomLog', data)
+        await this.vpost('/duelLog', data)
 
     }
 
@@ -145,7 +145,7 @@ class PinkkiUtil {
                     players = room.players.map(x => x.name).join(',')
                 }
             }
-            await this.vpost('/logRoom', {players})
+            await this.vpost('/roomLog', {players})
         }
     }
 }
