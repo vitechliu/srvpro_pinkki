@@ -59,7 +59,7 @@ ygopro.stoc_follow_after('JOIN_GAME', false, async (buffer, info, client, server
     if (room.duel_stage !== ygopro.constants.DUEL_STAGE.BEGIN) return null;
     await generateDeck(client, server, room, "获取随机卡组失败，使用自带卡组");
 });
-ygopro.stoc_follow_after('LEAVE_GAME', false, async (buffer, info, client, server, datas) => {
+ygopro.ctos_follow_after('LEAVE_GAME', false, async (buffer, info, client, server, datas) => {
     console.log('LeaveRoom')
     console.log(info)
     console.log(datas)
