@@ -105,7 +105,7 @@ class PinkkiUtil {
         const roomId = room.process_pid
         let playerInfos = []
         for (let player of room.dueling_players) {
-            const key = namevpass + '_' + roomId
+            const key = player.name_vpass + '_' + roomId
             const res = global.temp_hint_dict[key] ?? null
             if (!res) {
                 console.log("恢复卡组数据失败")
