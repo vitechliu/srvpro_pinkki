@@ -1712,7 +1712,7 @@
         for (extra_mode_func of extra_mode_list) {
           extra_mode_func.call(this, rule);
         }
-        if (rule.match(/(^|，|,)(NOLFLIST|NF)(，|,|$)/)) {
+        if (rule.match(/(^|，|,)(NOLFLIST|NF|DC)(，|,|$)/)) {
           this.hostinfo.lflist = -1;
         }
         if (rule.match(/(^|，|,)(NOUNIQUE|NU)(，|,|$)/)) {
