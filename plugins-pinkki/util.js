@@ -133,7 +133,7 @@ class PinkkiUtil {
             roomId: room.process_pid,
             playerInfos: playerInfos,
         }
-        await this.vpost('/')
+        await this.vpost('/roomLog', data)
 
     }
 
