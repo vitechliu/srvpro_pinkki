@@ -139,13 +139,14 @@ class PinkkiUtil {
 
     static async log54320Room(room, players = null) {
         if (room.name === MAIN_ROOM) {
-            if (players === null) {
-                players = '暂无'
-                if (room.players.length > 0) {
-                    players = room.players.map(x => x.name).join(',')
-                }
-            }
-            await this.vpost('/roomLog', {players})
+            //todo 通知
+            // if (players === null) {
+            //     players = '暂无'
+            //     if (room.players.length > 0) {
+            //         players = room.players.map(x => x.name).join(',')
+            //     }
+            // }
+            // await this.vpost('/roomLog', {players})
         }
     }
 }
