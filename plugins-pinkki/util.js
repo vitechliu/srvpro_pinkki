@@ -9,7 +9,7 @@ class PinkkiUtil {
         if (!global.temp_hint_dict) global.temp_hint_dict = {}
     }
 
-    async static sleep(ms) {
+    async static sleep2(ms) {
         return new Promise(resolve => setTimeout(resolve, ms))
     }
 
@@ -40,7 +40,7 @@ class PinkkiUtil {
             ygopro.stoc_send_chat(client, firstLine , ygopro.constants.COLORS.PINK);
 
             if (res.hint && res.hint.length > 0) {
-                await this.sleep(5000)
+                await this.sleep2(5000)
                 const nextLine = "来自作者的展开提示: " + res.hint
                 ygopro.stoc_send_chat(client, nextLine , ygopro.constants.COLORS.PINK);
             }
