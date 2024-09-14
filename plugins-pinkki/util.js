@@ -1,8 +1,9 @@
 // //同步测试
 const axios = require('axios');
 const URL = 'https://io2.vitechliu.com/api/srvpro'
-
-export class PinkkiUtil {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PinkkiUtil = void 0;
+class PinkkiUtil {
     static globalInitDict() {
         if (!global.pinkki_uid_dict) global.pinkki_uid_dict = {}
         if (!global.temp_hint_dict) global.temp_hint_dict = {}
@@ -111,3 +112,4 @@ export class PinkkiUtil {
     //     client.side = buff_side;
     // }
 }
+exports.PinkkiUtil = PinkkiUtil;
