@@ -1,6 +1,7 @@
 //同步测试
-const utils = require('../plugins-pinkki/util.js')
+// noinspection JSUnusedLocalSymbols
 
+const utils = require('../plugins-pinkki/util.js').PinkkiUtil
 
 // ygopro.ctos_follow_after('CREATE_GAME', true, async (buffer, info, client, server, datas) => {
 //     const room = getDCRoomFromPlayerClient(client);
@@ -17,9 +18,8 @@ function getDCRoomFromPlayerClient(client) {
 ygopro.stoc_follow_after("DUEL_START", false, async (buffer, info, client, server, datas) => {
     const room = getDCRoomFromPlayerClient(client);
     if (!room) return null;
-    const roomname = room.name
     const username = client.name_vpass
-    await utils.loadDCContent(client, username, roomname)
+    await utils.loadDCContent(client, username, room.process_pid)
 });
 async function generateDeck(client, server, room, failMessage) {
     const roomname = room.name
@@ -30,7 +30,7 @@ async function generateDeck(client, server, room, failMessage) {
         return;
     }
     const deck = deckRaw.deck
-    utils.recordDCContent(username, roomname, deckRaw)
+    utils.recordDCContent(username, room.process_pid, deckRaw)
     const main = deck.main.concat(deck.extra);
     const side = deck.side;
     ygopro.stoc_send_chat(client, "成功获取随机卡组", ygopro.constants.COLORS.PINK);

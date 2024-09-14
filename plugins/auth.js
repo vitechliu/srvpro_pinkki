@@ -1,5 +1,5 @@
 //同步测试
-const utils = require('../plugins-pinkki/util.js')
+const utils = require('../plugins-pinkki/util.js').PinkkiUtil
 
 ygopro.stoc_follow_before('JOIN_GAME', false, async (buffer, info, client, server, datas) => {
     /** @type {Room} */

@@ -6,7 +6,6 @@ const STOC_EVENTS = ['CHANGE_SIDE', 'DUEL_START', 'ERROR_MSG'];
 const DEBUG = false;
 
 if (DEBUG) {
-
     for (let e of CTOS_EVENTS) {
         ygopro.ctos_follow_before(e, false, (buffer, info, client, server, datas) => {
             let infos = ['[CTOS]'];

@@ -1,18 +1,18 @@
 // //同步测试
-(function() {
-    const axios = require('axios');
-    const URL = 'https://io2.vitechliu.com/api/srvpro'
+const axios = require('axios');
+const URL = 'https://io2.vitechliu.com/api/srvpro'
 
-    this.globalInitDict = function() {
+export class PinkkiUtil {
+    static globalInitDict() {
         if (!global.pinkki_uid_dict) global.pinkki_uid_dict = {}
         if (!global.temp_hint_dict) global.temp_hint_dict = {}
     }
 
-    this.sleep = async function(ms) {
+    async static sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms))
     }
 
-    this.getDCDeck = async function(roomname, username) {
+    async static getDCDeck(roomname, username) {
         const uid = this.uidGet(username)
         try {
             const data = await this.vpost('/load', {room: roomname, uid: uid, name:username})
@@ -21,14 +21,14 @@
             return null
         }
     }
-    this.recordDCContent = function (namevpass, roomname, deckdata) {
+    static recordDCContent(namevpass, roomId, deckdata) {
         this.globalInitDict()
-        const key = namevpass + '_' + roomname
+        const key = namevpass + '_' + roomId
         global.temp_hint_dict[key] = deckdata
     }
-    this.loadDCContent = async function (client, namevpass, roomname) {
+    async static loadDCContent(client, namevpass, roomId) {
         this.globalInitDict()
-        const key = namevpass + '_' + roomname
+        const key = namevpass + '_' + roomId
         const res = global.temp_hint_dict[key] ?? null
         // console.log('loadDC')
         // console.log(global.temp_hint_dict)
@@ -46,7 +46,7 @@
             delete global.temp_hint_dict[key]
         }
     }
-    this.genDeckBuff = function(main, side) {
+    static genDeckBuff(main, side) {
         let compat_deckbuf = main.concat(side);
         let fin = {}
         let i = 0
@@ -56,7 +56,7 @@
         }
         return fin
     }
-    this.vpost = async function (path, params) {
+    async static vpost(path, params) {
         try {
             return await axios.request({
                 method: 'post',
@@ -71,17 +71,15 @@
             return null
         }
     }
-
-    this.uidSet = function(name, uid) {
+    static uidSet(name, uid) {
         this.globalInitDict()
         global.pinkki_uid_dict[name] = uid
     }
-    this.uidGet = function(name) {
+    static uidGet(name) {
         this.globalInitDict()
         return global.pinkki_uid_dict[name] ?? null
     }
-
-    this.roomHasType = function(roomname, type) {
+    static roomHasType(roomname, type) {
         var room_parameters = roomname.split('#', 2)[0].split(/[,£¬]/);
         var found = false;
         for (var parameter of room_parameters) {
@@ -91,26 +89,25 @@
         }
         return false
     }
-
-    this.optimizeClientDeck = function(info, client) {
-        buff_main = (function() {
-            var j, ref, results;
-            results = [];
-            for (i = j = 0, ref = info.mainc; (0 <= ref ? j < ref : j > ref); i = 0 <= ref ? ++j : --j) {
-                results.push(info.deckbuf[i]);
-            }
-            return results;
-        })();
-        buff_side = (function() {
-            var j, ref, ref1, results;
-            results = [];
-            for (i = j = ref = info.mainc, ref1 = info.mainc + info.sidec; (ref <= ref1 ? j < ref1 : j > ref1); i = ref <= ref1 ? ++j : --j) {
-                results.push(info.deckbuf[i]);
-            }
-            return results;
-        })();
-        client.main = buff_main;
-        client.side = buff_side;
-    }
-
-}).call(this);
+    //
+    // optimizeClientDeck(info, client) {
+    //     buff_main = (function() {
+    //         var j, ref, results;
+    //         results = [];
+    //         for (i = j = 0, ref = info.mainc; (0 <= ref ? j < ref : j > ref); i = 0 <= ref ? ++j : --j) {
+    //             results.push(info.deckbuf[i]);
+    //         }
+    //         return results;
+    //     })();
+    //     buff_side = (function() {
+    //         var j, ref, ref1, results;
+    //         results = [];
+    //         for (i = j = ref = info.mainc, ref1 = info.mainc + info.sidec; (ref <= ref1 ? j < ref1 : j > ref1); i = ref <= ref1 ? ++j : --j) {
+    //             results.push(info.deckbuf[i]);
+    //         }
+    //         return results;
+    //     })();
+    //     client.main = buff_main;
+    //     client.side = buff_side;
+    // }
+}
