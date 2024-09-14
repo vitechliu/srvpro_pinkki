@@ -3424,6 +3424,7 @@
       reason = buffer.readUInt8(2);
       //log.info {winner: pos, reason: reason}
       //room.duels.push {winner: pos, reason: reason}
+      console.log("calcWinner" + pos)
       room.winner = pos;
       room.turn = 0;
       room.duel_stage = ygopro.constants.DUEL_STAGE.END;
