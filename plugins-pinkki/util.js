@@ -9,7 +9,7 @@ class PinkkiUtil {
         if (!global.temp_hint_dict) global.temp_hint_dict = {}
     }
 
-    async static sleep2(ms) {
+    static async sleep2(ms) {
         return new Promise(resolve => setTimeout(resolve, ms))
     }
 
