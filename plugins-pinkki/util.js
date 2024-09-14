@@ -103,8 +103,8 @@ class PinkkiUtil {
         if (!this.roomHasType(room.name, 'DC')) return;
         this.log54320Room(room, '暂无').then(res => {})
         const roomId = room.process_pid
-        console.log("RoomWinner")
-        console.log(room.winner)
+        // console.log("RoomWinner")
+        // console.log(room.winner)
         let playerInfos = []
         let isDouble = room.dueling_players.length === 4
         for (let player of room.dueling_players) {
