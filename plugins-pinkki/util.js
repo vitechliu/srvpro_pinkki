@@ -106,6 +106,7 @@ class PinkkiUtil {
         console.log("RoomWinner")
         console.log(room.winner)
         let playerInfos = []
+        let isDouble = room.dueling_players.length === 4
         for (let player of room.dueling_players) {
             const key = player.name_vpass + '_' + roomId
             const res = global.temp_hint_dict[key] ?? null
@@ -116,8 +117,13 @@ class PinkkiUtil {
             this.removeDCContent(player.name_vpass, roomId)
 
             let isWinner = false;
-            if (room.winner <= 1) isWinner = player.pos <= 1
-            else isWinner = player.pos >= 2
+            if (isDouble) {
+                if (room.winner <= 1) isWinner = player.pos <= 1
+                else isWinner = player.pos >= 2
+            } else {
+                isWinner = player.pos === room.winner
+            }
+
 
             playerInfos.push({
                 uid: this.uidGet(player.name_vpass),
