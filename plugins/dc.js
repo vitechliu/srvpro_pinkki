@@ -19,6 +19,7 @@ ygopro.stoc_follow_after("DUEL_START", false, async (buffer, info, client, serve
     const room = getDCRoomFromPlayerClient(client);
     if (!room) return null;
     const username = client.name_vpass
+    utils.recordStartTime(room.process_pid)
     await utils.loadDCContent(client, username, room.process_pid)
 });
 async function generateDeck(client, server, room, failMessage) {

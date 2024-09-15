@@ -30,9 +30,14 @@ class PinkkiUtil {
         const key = namevpass + '_' + roomId
         global.temp_hint_dict[key] = deckdata
     }
-    static async recordStartTime(roomId) {
+    static recordStartTime(roomId) {
         this.globalInitDict()
         global.start_time_dict[roomId] = moment().toDate()
+    }
+    static pullStartTime(roomId) {
+        const res = global.start_time_dict[roomId] ?? null
+        if (res) delete global.start_time_dict[roomId]
+        return res
     }
     static async loadDCContent(client, namevpass, roomId) {
         const key = namevpass + '_' + roomId
@@ -139,6 +144,7 @@ class PinkkiUtil {
         const data = {
             room: room.name,
             roomId: room.process_pid,
+            roomStartTime: this.pullStartTime(roomId),
             playerInfos: playerInfos,
         }
         await this.vpost('/duelLog', data)
