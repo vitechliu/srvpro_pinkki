@@ -69,7 +69,7 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
     if (uid === null) {
         const kickedName = client.name;
         //踢出
-        ygopro.stoc_send_chat_to_room(room, "[" + kickedName + "]被移出了房间(没有绑定账号，并且找不到同名群账号)", ygopro.constants.COLORS.PINK);
+        ygopro.stoc_send_chat_to_room(room, "[" + kickedName + "]被移出了房间(没有绑定账号，并且找不到同名群账号)", ygopro.constants.COLORS.RED);
         global.CLIENT_kick(client);
         return '_cancel';
     }
