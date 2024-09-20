@@ -11,8 +11,7 @@ ygopro.ctos_follow_before('CHAT', true, async function(buffer, info, client, ser
     const cmdFirst = cmd[0] ?? null;
     const BASE_COMMANDS = ['/投降', '/surrender', '/ai', '/roomname', '/refresh', '/test'];
     switch (msg) {
-        case '瓜巴':
-        case '/瓜巴':
+        case '神秘瓜巴指令':
             ygopro.stoc_send_hint_card_to_room(room, 11012887)
             return true;
     }
