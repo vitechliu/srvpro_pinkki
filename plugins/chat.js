@@ -10,9 +10,18 @@ ygopro.ctos_follow_before('CHAT', true, async function(buffer, info, client, ser
     const cmd = msg.split(' ');
     const cmdFirst = cmd[0] ?? null;
     const BASE_COMMANDS = ['/投降', '/surrender', '/ai', '/roomname', '/refresh', '/test'];
+    switch (msg) {
+        case '瓜巴':
+        case '/瓜巴':
+            ygopro.stoc_send_hint_card_to_room(room, 11012887)
+            return true;
+    }
+
     if (!isCMD || BASE_COMMANDS.includes(cmdFirst)) {
         return false;
     }
+
+
 
     const uid = utils.uidGet(client.name_vpass)
     const res = await utils.vpost('/chat', {
@@ -25,7 +34,7 @@ ygopro.ctos_follow_before('CHAT', true, async function(buffer, info, client, ser
     console.log(res)
     if (res && res.data.type) {
         const type = res.data.type
-        const message = res.data.message ?? null
+        const message = res.data.response ?? null
         let color = res.data.color ?? null
         if (!color) {
             color = ygopro.constants.COLORS.PINK
