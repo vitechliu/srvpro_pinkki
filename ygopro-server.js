@@ -4266,6 +4266,10 @@
             }
           }
         }
+        break;
+      case '/test':
+        ygopro.stoc_send_hint_card_to_room(room, 2333365)
+        break;
     }
     //when '/test'
     //  ygopro.stoc_send_hint_card_to_room(room, 2333365)

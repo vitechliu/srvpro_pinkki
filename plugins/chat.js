@@ -2,13 +2,17 @@
 
 const utils = require('../plugins-pinkki/util.js').PinkkiUtil
 
-ygopro.ctos_follow_after('CHAT', false, async function(buffer, info, client, server, datas) {
+ygopro.ctos_follow_before('CHAT', true, async function(buffer, info, client, server, datas) {
     const room = ROOM_all[client.rid] ?? null;
-    if (!room) return;
-    const msg = info.msg.trim();
-    console.log("chat:" + msg)
-    if (msg.substring(0, 1) !== "/") return;
-    console.log("chat2")
+    if (!room) return false;
+    const msg = global._.trim(info.msg);
+    const isCMD = global._.startsWith(msg, "/");
+    const cmd = msg.split(' ');
+    const cmdFirst = cmd[0] ?? null;
+    const BASE_COMMANDS = ['/投降', '/surrender', '/ai', '/roomname', '/refresh', '/test'];
+    if (!isCMD || BASE_COMMANDS.includes(cmdFirst)) {
+        return false;
+    }
 
     const uid = utils.uidGet(client.name_vpass)
     const res = await utils.vpost('/chat', {
@@ -35,4 +39,5 @@ ygopro.ctos_follow_after('CHAT', false, async function(buffer, info, client, ser
             ygopro.stoc_send_chat_to_room(room, message, color);
         }
     }
+    return true;
 });
