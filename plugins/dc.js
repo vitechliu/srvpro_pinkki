@@ -49,11 +49,11 @@ async function generateDeck(client, server, room, failMessage) {
     // const promise = ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
     // console.log(promise)
 
-    ygopro.ctos_send(server, "UPDATE_DECK", updateInfo);
+    ygopro.ctos_send(client.server, "UPDATE_DECK", updateInfo);
 
 }
 
-ygopro.stoc_follow_after('JOIN_GAME', false, async (buffer, info, client, server, datas) => {
+ygopro.stoc_follow_after('JOIN_GAME', true, async (buffer, info, client, server, datas) => {
     const room = getDCRoomFromPlayerClient(client);
     if (!room) return null;
     utils.log54320Room(room).then(r => {});
@@ -75,13 +75,14 @@ ygopro.ctos_follow_after("UPDATE_DECK", true, async (buffer, info, client, serve
     }
     return true; //跳过DC房间的自主卡组提交阶段
 });
-ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, server, datas) => {
-    //todo test
-    const room = getDCRoomFromPlayerClient(client);
-    if (!room) return null;
-    await generateDeck(client, server, room, "更新随机卡组失败，使用自带卡组");
-    return true;
-});
+
+// ygopro.stoc_follow_after("CHANGE_SIDE", true, async (buffer, info, client, server, datas) => {
+//     //todo test
+//     const room = getDCRoomFromPlayerClient(client);
+//     if (!room) return null;
+//     await generateDeck(client, server, room, "更新随机卡组失败，使用自带卡组");
+//     return true;
+// });
 
 
 // ygopro.stoc_follow_after("ERROR_MSG", true, async (buffer, info, client, server, datas) => {
