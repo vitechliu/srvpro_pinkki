@@ -6,7 +6,9 @@ ygopro.ctos_follow_after('CHAT', false, async function(buffer, info, client, ser
     const room = ROOM_all[client.rid] ?? null;
     if (!room) return;
     const msg = info.msg.trim();
+    console.log("chat:" + msg)
     if (msg.substring(0, 1) !== "/") return;
+    console.log("chat2")
 
     const uid = utils.uidGet(client.name_vpass)
     const res = await utils.vpost('/chat', {
@@ -16,6 +18,7 @@ ygopro.ctos_follow_after('CHAT', false, async function(buffer, info, client, ser
         roomId: room.process_pid,
         content: msg
     })
+    console.log(res)
     if (res && res.data.type) {
         const type = res.data.type
         const message = res.data.message ?? null
