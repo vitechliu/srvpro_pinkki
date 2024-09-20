@@ -31,7 +31,7 @@ ygopro.ctos_follow_before('CHAT', true, async function(buffer, info, client, ser
         roomId: room.process_pid,
         content: msg
     })
-    console.log(res)
+    // console.log(res)
     if (res && res.data.type) {
         const type = res.data.type
         const message = res.data.response ?? null
