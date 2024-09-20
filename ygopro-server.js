@@ -1305,17 +1305,17 @@
       return false;
     }
     disconnect_info = disconnect_list[CLIENT_get_authorize_key(client)];
-    // if (!(disconnect_info && disconnect_info.deckbuf)) {
-    //   return false;
-    // }
+    if (!(disconnect_info && disconnect_info.deckbuf)) {
+      return false;
+    }
     room = ROOM_all[disconnect_info.room_id];
     if (!room) {
       CLIENT_reconnect_unregister(client);
       return false;
     }
-    if (deckbuf && deckbuf.compare(disconnect_info.deckbuf) !== 0) {
-      return false;
-    }
+    // if (deckbuf && deckbuf.compare(disconnect_info.deckbuf) !== 0) {
+    //   return false;
+    // }
     return true;
   };
 
