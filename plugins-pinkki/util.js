@@ -26,12 +26,10 @@ class PinkkiUtil {
         }
     }
     static recordDCContent(namevpass, roomId, deckdata) {
-        this.globalInitDict()
         const key = namevpass + '_' + roomId
         global.temp_hint_dict[key] = deckdata
     }
     static recordStartTime(roomId) {
-        this.globalInitDict()
         global.start_time_dict[roomId] = moment().toDate()
     }
     static pullStartTime(roomId) {
@@ -86,11 +84,9 @@ class PinkkiUtil {
         }
     }
     static uidSet(name, uid) {
-        this.globalInitDict()
         global.pinkki_uid_dict[name] = uid
     }
     static uidGet(name) {
-        this.globalInitDict()
         return global.pinkki_uid_dict[name] ?? null
     }
     static roomHasType(roomname, type) {

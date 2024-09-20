@@ -549,6 +549,8 @@
       };
       setTimeout(get_rooms_count, 1000);
     }
+    PinkkiUtil.globalInitDict()
+
     if (settings.modules.windbot.enabled) {
       log.info("Reading bot list.");
       windbots = global.windbots = ((await loadJSONAsync(settings.modules.windbot.botlist))).windbots;
