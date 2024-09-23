@@ -10,7 +10,10 @@ class PinkkiUtil {
         if (!global.pinkki_uid_dict) global.pinkki_uid_dict = {}
         if (!global.temp_hint_dict) global.temp_hint_dict = {}
         if (!global.start_time_dict) global.start_time_dict = {}
+        if (!global.dc_decks) global.dc_decks = []
+        if (!global.dc_decks_loading) global.dc_decks_loading = false
     }
+
 
     static async sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms))
@@ -100,9 +103,32 @@ class PinkkiUtil {
         return false
     }
 
+    static async preloadDecks() {
+        const preloadCount = 20; //比20小就需要预加载
+        if (global.dc_decks.length > preloadCount) return;
+        if (global.dc_decks_loading) return;
+        global.dc_decks_loading = true;
+        console.log("卡组不足，加载50套卡组")
+        const data = await this.vpost('/load2', {})
+        if (data && data.decks) {
+            for (let deck of data.decks) {
+                global.dc_decks.push(deck)
+            }
+        }
+        global.dc_decks_loading = false;
+    }
+    static async deckLog(room, username, deckId) {
+        const uid = this.uidGet(username)
+        await this.vpost('/deckLog', {
+            room: room.name,
+            name: username,
+            uid: uid,
+            deckId: deckId
+        })
+    }
+
     static async logDCDuel(room) {
         if (!this.roomHasType(room.name, 'DC')) return;
-        this.log54320Room(room, '暂无').then(res => {})
         const roomId = room.process_pid
         // console.log("RoomWinner")
         // console.log(room.winner)
@@ -119,8 +145,8 @@ class PinkkiUtil {
 
             let isWinner = false;
             if (isDouble) {
-                if (room.winner <= 1) isWinner = player.pos <= 1
-                else isWinner = player.pos >= 2
+                if (room.winner === 1 || room.winner === 0) isWinner = player.pos <= 1
+                else if (room.winner === 2 || room.winner === 3) isWinner = player.pos >= 2
             } else {
                 isWinner = player.pos === room.winner
             }
@@ -145,19 +171,6 @@ class PinkkiUtil {
         }
         await this.vpost('/duelLog', data)
 
-    }
-
-    static async log54320Room(room, players = null) {
-        if (room.name === MAIN_ROOM) {
-            //todo 通知
-            // if (players === null) {
-            //     players = '暂无'
-            //     if (room.players.length > 0) {
-            //         players = room.players.map(x => x.name).join(',')
-            //     }
-            // }
-            // await this.vpost('/roomLog', {players})
-        }
     }
 }
 exports.PinkkiUtil = PinkkiUtil;
