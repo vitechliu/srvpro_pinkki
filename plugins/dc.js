@@ -26,7 +26,7 @@ function generateDeckV2(client, server, room, failMessage) {
     const roomname = room.name
     const username = client.name_vpass
     if (global.dc_decks.length <= 0) {
-        ygopro.stoc_send_chat(room, failMessage, ygopro.constants.COLORS.RED);
+        ygopro.stoc_send_chat_to_room(room, failMessage, ygopro.constants.COLORS.RED);
         return;
     }
     const deckRaw = global.dc_decks.shift()
