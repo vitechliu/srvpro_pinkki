@@ -120,10 +120,10 @@ class PinkkiUtil {
         }
         global.dc_decks_loading = false;
     }
-    static async deckLog(room, username, deckId) {
+    static async deckLog(roomname, username, deckId) {
         const uid = this.uidGet(username)
         await this.vpost('/deckLog', {
-            room: room.name,
+            room: roomname,
             name: username,
             uid: uid,
             deckId: deckId
