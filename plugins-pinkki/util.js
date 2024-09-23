@@ -12,6 +12,8 @@ class PinkkiUtil {
         if (!global.start_time_dict) global.start_time_dict = {}
         if (!global.dc_decks) global.dc_decks = []
         if (!global.dc_decks_loading) global.dc_decks_loading = false
+
+        this.preloadDecks()
     }
 
 
