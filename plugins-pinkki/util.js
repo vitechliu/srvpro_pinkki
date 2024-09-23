@@ -113,8 +113,8 @@ class PinkkiUtil {
         console.log("卡组不足，加载50套卡组")
         const data = await this.vpost('/load2', {})
         console.log(data)
-        if (data && data.decks) {
-            for (let deck of data.decks) {
+        if (data && data.data && data.data.decks) {
+            for (let deck of data.data.decks) {
                 global.dc_decks.push(deck)
             }
         }
